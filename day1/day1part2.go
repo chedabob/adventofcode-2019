@@ -13,15 +13,20 @@ func check (e error) {
 	}
 }
 
-func calculateFuel(fuel int) int {
-	return (fuel / 3) - 2
+func calculateFuel(mass int, currFuel int) int {
+	fuel := (mass / 3) - 2
+	if fuel <= 0 {
+		return currFuel
+	} else {
+		return calculateFuel(fuel, currFuel + fuel)
+	}
 }
 
 func test () {
 	value := 100756
-	expected := 33583
+	expected := 50346
 
-	fuel := calculateFuel(value)
+	fuel := calculateFuel(value, 0)
 	if fuel != expected {
 		panic("ugh")
 	}
@@ -44,7 +49,7 @@ func main() {
 	for _, mod := range modules {
 		asInt, err := strconv.Atoi(strings.TrimSpace(mod))
 		check(err)
-		sum += calculateFuel(asInt)
+		sum += calculateFuel(asInt, 0)
 	}
 
 	fmt.Println(sum)
