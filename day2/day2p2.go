@@ -14,15 +14,20 @@ func check (e error) {
 }
 
 
-func startProgram (input string) int {
+func startProgram (input string, noun int, verb int) int {
+	defer func() {
+		if err := recover(); err != nil {
+			//fmt.Println(err)
+		}
+	}()
 	var instructions = parse(input)
 
-	instructions[1] = 12
-	instructions[2] = 2
+	instructions[1] = noun
+	instructions[2] = verb
 
 	afterRun := adjustState(instructions)
 
-	fmt.Println(afterRun)
+	//fmt.Println(afterRun)
 
 	return afterRun[0]
 
@@ -72,6 +77,20 @@ func convertToInts (input []string) []int {
 	return t2
 }
 
+func findOutput (input string) {
+	out := 19690720
+
+	for noun := 0; noun < 128; noun++ {
+		for verb := 0; verb < 128; verb++ {
+			calced := startProgram(input, noun, verb)
+			if calced == out {
+				fmt.Println(100 * noun + verb)
+				return
+			}
+		}
+	}
+}
+
 func test () {
 	input := "1,1,1,4,99,5,6,0,99"
 	parsed := parse(input)
@@ -87,14 +106,12 @@ func test () {
 
 func main() {
 
-	test()
+	// test()
 
 	data, err := ioutil.ReadFile("./d2p1.txt")
 	check(err)
 	input := string(data)
 	fmt.Println(input)
 
-	output := startProgram(input)
-
-	fmt.Println(output)
+	findOutput(input)
 }
