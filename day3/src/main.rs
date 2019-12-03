@@ -87,8 +87,7 @@ fn test2(in1 : String, in2: String) {
 
     }
 
-    // It's 2 out and I don't know
-    println!("Best sum {}", curr_best_distance + 2);
+    println!("Best sum {}", curr_best_distance);
 }
 
 fn walk_grid(instructions: &Vec<&str>, grid : &mut Array2D<i32>) {
@@ -202,7 +201,7 @@ fn check_distances(instructions: &Vec<&str>, grid : &Array2D<i32>) -> Vec<(i32, 
 
     let mut intersections: Vec<(i32, i32)> = vec![];
 
-    let mut wire_length = 0i32;
+    let mut wire_length = 1i32;
 
     for (index, instruction) in instructions.iter().enumerate() {
         let direction = instruction.chars().next().unwrap();
