@@ -1,5 +1,6 @@
 fn main() {
     part1();
+    part2();
 }
 
 fn part1() {
@@ -14,7 +15,22 @@ fn part1() {
         }
     }
 
-    println!("Num Passwords: {}", num_passwords);
+    println!("P1 Num Passwords: {}", num_passwords);
+}
+
+fn part2() {
+    let range_lower = 272091i32;
+    let range_higher = 815432i32;
+    let mut num_passwords = 0i32;
+
+    for val in range_lower..=range_higher {
+        if is_six_digit(val) && is_descending(val) && has_consecutive(val) && has_no_large_group(val) {
+            //println!("{}", val);
+            num_passwords += 1;
+        }
+    }
+
+    println!("P2 Num Passwords: {}", num_passwords);
 }
 
 
@@ -39,4 +55,16 @@ fn has_consecutive (input : i32) -> bool {
         }
     }
     return false;
+}
+
+fn has_no_large_group (input : i32) -> bool {
+    let s : String = input.to_string();
+    let chars = s.chars();
+    let groups : std::collections::HashMap<char, usize> = 
+        chars.fold(Default::default(), | mut state, c| {
+            let count = state.entry(c).or_insert(0);
+            *count +=1;
+            state
+        });
+    return groups.values().any(|val| *val == 2);
 }
