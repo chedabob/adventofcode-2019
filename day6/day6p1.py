@@ -2,6 +2,7 @@ class SpaceObject:
     def __init__(self, id):
         self.id = id
         self.orbiting = []
+        self.parent = None
     def __str__(self):
         return "{} with orbiting: {}".format(self.id, "".join(map(str, self.orbiting)))
     
@@ -12,6 +13,31 @@ class SpaceObject:
             sub.walk(depths, nextdepth)
         return depths
 
+
+    def find(self, tofind, numtransfers, tree, visited):
+        visited.append(self)
+        if self.id == tofind:
+            return (True, numtransfers)
+        else:
+            candidates = self.orbiting.copy()
+            if self.parent != None:
+                candidates.append(self.parent)
+
+            viable = [x for x in candidates if x not in visited]
+            found = False
+            newnumtransfers = numtransfers
+            for v in viable:
+                vidistance = v.find(tofind, numtransfers + 1, tree, visited)  
+                if vidistance[0] == True:
+                    newnumtransfers = vidistance[1]
+                    found = True
+                    break
+            return (found, newnumtransfers)
+
+def calc_transfers(tree):
+    start = tree["YOU"]
+    dst = "SAN"
+    return start.find(dst, 0, tree, [])[1] - 2
 
 def max_depth(tree):
     count = 0
@@ -25,11 +51,8 @@ def load_map(filename):
         return data.split("\n")
 
 
-def run(input):
+def build(input):
     spaceobjs = {}
-    # # Insert the common obj
-    # common = SpaceObject("COM)COM")
-    # spaceobjs[common.id] = common
 
     for obj in input:
         comps = obj.split(")")
@@ -46,19 +69,44 @@ def run(input):
             spaceobjs[orbiting.id] = orbiting
 
         orbiting.orbiting.append(existing)
+        existing.parent = orbiting
 
-    return max_depth(spaceobjs)
+    return spaceobjs
 
-def test():
+
+def testpart1():
     mp = load_map('test.txt')
-    depth = run(mp)
+    objs = build(mp)
+    depth = max_depth(objs)
     assert depth == 42
     print("Test depth", depth)
 
-def day1():
-    mp = load_map('input.txt')
-    depth = run(mp)
-    print("Day1 depth", depth)
 
-test()
-day1()
+def part1():
+    mp = load_map('input.txt')
+    objs = build(mp)
+    depth = max_depth(objs)
+    print("Part1 depth", depth)
+
+def testpart2():
+    mp = load_map('test2.txt')
+    objs = build(mp)
+    transfers = calc_transfers(objs)
+    print("Test transfers", transfers)
+    assert transfers == 4
+
+
+def part2():
+    mp = load_map('input.txt')
+    objs = build(mp)
+    transfers = calc_transfers(objs)
+    print("Part2 transfers", transfers)
+
+
+
+
+testpart1()
+part1()
+
+testpart2()
+part2()
