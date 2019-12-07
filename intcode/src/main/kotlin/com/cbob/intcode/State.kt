@@ -5,4 +5,5 @@ class State {
     var instPtr = 0
     var inputs : Array<Int> = arrayOf()
     var output = 0
+    val currInstr : Int; get() = instructions[instPtr]
 }
