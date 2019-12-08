@@ -1,9 +1,10 @@
 package com.cbob.intcode.commands
 
+import com.cbob.intcode.CommandParams
 import com.cbob.intcode.State
 
 class MultiplyCommand : Command {
-    override fun execute(state: State) {
+    override fun execute(state: State, params: CommandParams) {
         val p1 = state.instructions[state.instPtr + 1]
         val p2 = state.instructions[state.instPtr + 2]
         val dst = state.instructions[state.instPtr + 3]

@@ -23,18 +23,21 @@ class Machine {
 
         while (state.instPtr < numInstr) {
             val cmd = mapToCommand(state.currInstr)
-            cmd.execute(state)
+            cmd.first.execute(state,cmd.second)
         }
         return state
     }
 
-    private fun mapToCommand(raw: Int) : Command {
-        return when (raw) {
+    private fun mapToCommand(raw: Int) : Pair<Command, CommandParams> {
+        val params = CommandParams(raw)
+        val cmd =  when (params.commandCode) {
             1 -> AddCommand()
             2 -> MultiplyCommand()
             99 -> TerminateCommand()
             else -> throw Exception("Unknown instruction")
         }
+
+        return Pair(cmd, params)
     }
 
     private fun buildCommandParams (raw : Int) : CommandParams{
