@@ -7,7 +7,7 @@ import com.cbob.intcode.commands.TerminateCommand
 import java.lang.Exception
 
 class Machine {
-    fun run (input : String, noun : Int?, verb : Int?) : State {
+    fun run (input : String, noun : Int? = null, verb : Int? = null) : State {
         val state = State()
         state.instructions = input.split(",").map { it.toInt() }.toTypedArray()
 
@@ -35,5 +35,9 @@ class Machine {
             99 -> TerminateCommand()
             else -> throw Exception("Unknown instruction")
         }
+    }
+
+    private fun buildCommandParams (raw : Int) : CommandParams{
+        return CommandParams(raw)
     }
 }
