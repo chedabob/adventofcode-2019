@@ -1,15 +1,13 @@
 package com.cbob.intcode
 
-import com.cbob.intcode.commands.AddCommand
-import com.cbob.intcode.commands.Command
-import com.cbob.intcode.commands.MultiplyCommand
-import com.cbob.intcode.commands.TerminateCommand
+import com.cbob.intcode.commands.*
 import java.lang.Exception
 
 class Machine {
-    fun run (input : String, noun : Int? = null, verb : Int? = null) : State {
+    fun run (instrStr : String, noun : Int? = null, verb : Int? = null, inputs: Array<Int> = arrayOf()) : State {
         val state = State()
-        state.instructions = input.split(",").map { it.toInt() }.toTypedArray()
+        state.instructions = instrStr.split(",").map { it.toInt() }.toTypedArray()
+        state.inputs = inputs
 
         noun?.let{
             state.instructions[1] = it
@@ -33,6 +31,8 @@ class Machine {
         val cmd =  when (params.commandCode) {
             1 -> AddCommand()
             2 -> MultiplyCommand()
+            3 -> StoreCommand()
+            4 -> OutputCommand()
             99 -> TerminateCommand()
             else -> throw Exception("Unknown instruction")
         }
