@@ -1,13 +1,16 @@
 package com.cbob.intcode
 
 import java.lang.Exception
+import java.lang.Integer.max
 
 fun main() {
-    day2Part1()
-    day2Part2()
+//    day2Part1()
+//    day2Part2()
+//
+//    day5Part1()
+//    day5Part2()
 
-    day5Part1()
-    day5Part2()
+    day7Part1()
 }
 
 fun day2Part1() {
@@ -52,5 +55,51 @@ fun day5Part2() {
     val finalState = runner.run(input, inputs = arrayOf(5))
 
     println("Day5 Part2 : ${finalState.output}")
+}
 
+fun day7Part1() {
+    val program =
+        "3,8,1001,8,10,8,105,1,0,0,21,42,55,64,77,94,175,256,337,418,99999,3,9,102,4,9,9,1001,9,5,9,102,2,9,9,101,3,9,9,4,9,99,3,9,102,2,9,9,101,5,9,9,4,9,99,3,9,1002,9,4,9,4,9,99,3,9,102,4,9,9,101,5,9,9,4,9,99,3,9,102,5,9,9,1001,9,3,9,1002,9,5,9,4,9,99,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,1002,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,1,9,4,9,99,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,101,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,101,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,1001,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,1,9,4,9,99"
+    val runner = Machine()
+
+    var highestSignal = 0
+    for (combo in 0..44444) {
+
+        try {
+            val components = intToComponents(combo)
+            if (isValidCombo(components)) {
+
+                var power = 0
+                while (components.isNotEmpty()) {
+                    val phaseSetting = components.removeAt(0)
+                    val outputState = runner.run(program, inputs = arrayOf(phaseSetting, power))
+                    power = outputState.output
+                }
+                println("Signal $power for input $combo")
+                highestSignal = max(power, highestSignal)
+            }
+        } catch (ex: Exception) {
+            println("Exception for $combo : $ex")
+        }
+    }
+
+    println("Day 7 Part 1: $highestSignal")
+
+}
+
+fun intToComponents (int: Int) : MutableList<Int> {
+    val maxLength = 5
+    val chars = int.toString()
+    var delta = maxLength - chars.length
+    val asInts = chars.map { ("" + it).toInt() }.toMutableList()
+    while (delta > 0) {
+        asInts.add(0,0)
+        delta--
+    }
+    return asInts
+
+}
+
+fun isValidCombo (input : MutableList<Int>) : Boolean {
+    return !input.groupBy { it }.any { it.value.size > 1 }
 }

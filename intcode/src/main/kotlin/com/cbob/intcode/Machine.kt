@@ -38,13 +38,9 @@ class Machine {
             7 -> LessThanCommand()
             8 -> EqualCommand()
             99 -> TerminateCommand()
-            else -> throw Exception("Unknown instruction")
+            else -> throw Exception("Unknown instruction ${params.commandCode}")
         }
 
         return Pair(cmd, params)
-    }
-
-    private fun buildCommandParams (raw : Int) : CommandParams{
-        return CommandParams(raw)
     }
 }
