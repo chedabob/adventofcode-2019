@@ -33,6 +33,8 @@ class Machine {
             2 -> MultiplyCommand()
             3 -> StoreCommand()
             4 -> OutputCommand()
+            5 -> JumpTrueCommand()
+            6 -> JumpFalseCommand()
             99 -> TerminateCommand()
             else -> throw Exception("Unknown instruction")
         }

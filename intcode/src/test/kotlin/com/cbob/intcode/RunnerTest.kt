@@ -103,6 +103,74 @@ class CommandTest {
     }
 
     @Test
+    fun test_JumpTrue_NoJump () {
+        val state = State()
+        state.instructions = arrayOf(5,5,6,1,4,0,7,1)
+
+        val cmd = JumpTrueCommand()
+        cmd.execute(state,CommandParams(10005))
+
+        Assert.assertEquals(3, state.instPtr)
+    }
+
+    @Test
+    fun test_JumpTrue_Jump () {
+        val state = State()
+        state.instructions = arrayOf(5,5,6,1,4,1,7,1)
+
+        val cmd = JumpTrueCommand()
+        cmd.execute(state,CommandParams(10005))
+
+        Assert.assertEquals(7, state.instPtr)
+    }
+
+    @Test
+    fun test_JumpTrue_Jump_Immediate () {
+        val state = State()
+        state.instructions = arrayOf(5,1,3,1,4,1,7,1)
+
+        val cmd = JumpTrueCommand()
+        cmd.execute(state,CommandParams(1105))
+
+        Assert.assertEquals(3, state.instPtr)
+    }
+
+    @Test
+    fun test_JumpFalse_NoJump () {
+        val state = State()
+        state.instructions = arrayOf(6,5,6,1,4,1,7,1)
+
+        val cmd = JumpFalseCommand()
+        cmd.execute(state,CommandParams(10006))
+
+        Assert.assertEquals(3, state.instPtr)
+    }
+
+    @Test
+    fun test_JumpFalse_Jump () {
+        val state = State()
+        state.instructions = arrayOf(6,5,6,1,4,0,7,1)
+
+        val cmd = JumpFalseCommand()
+        cmd.execute(state,CommandParams(10006))
+
+        Assert.assertEquals(7, state.instPtr)
+    }
+
+    @Test
+    fun test_JumpFalse_Jump_Immediate () {
+        val state = State()
+        state.instructions = arrayOf(6,0,7,1,4,1,7,1)
+
+        val cmd = JumpFalseCommand()
+        cmd.execute(state,CommandParams(1106))
+
+        Assert.assertEquals(7, state.instPtr)
+    }
+
+
+
+    @Test
     fun test_day2_part1_examples () {
         val test1 = "1,9,10,3,2,3,11,0,99,30,40,50"
         val expected1 = 3500
