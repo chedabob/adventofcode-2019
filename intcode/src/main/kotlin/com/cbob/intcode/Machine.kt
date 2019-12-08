@@ -35,6 +35,8 @@ class Machine {
             4 -> OutputCommand()
             5 -> JumpTrueCommand()
             6 -> JumpFalseCommand()
+            7 -> LessThanCommand()
+            8 -> EqualCommand()
             99 -> TerminateCommand()
             else -> throw Exception("Unknown instruction")
         }
