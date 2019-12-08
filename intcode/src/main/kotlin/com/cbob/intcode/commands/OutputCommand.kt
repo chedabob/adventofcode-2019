@@ -5,11 +5,9 @@ import com.cbob.intcode.State
 
 class OutputCommand : Command {
     override fun execute(state: State, params: CommandParams) {
-        val loc = state.instructions[state.instPtr + 1]
-        val toWrite = state.instructions[loc]
+        val toWrite = getVal(state, state.instPtr + 1, params.param1)
         state.output = toWrite
 
         state.instPtr += 2
     }
-
 }
