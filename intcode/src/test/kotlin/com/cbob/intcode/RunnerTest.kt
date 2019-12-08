@@ -1,9 +1,6 @@
 package com.cbob.intcode
 
-import com.cbob.intcode.commands.AddCommand
-import com.cbob.intcode.commands.MultiplyCommand
-import com.cbob.intcode.commands.StoreCommand
-import com.cbob.intcode.commands.TerminateCommand
+import com.cbob.intcode.commands.*
 import org.junit.Assert
 import org.junit.Test
 
@@ -53,6 +50,17 @@ class CommandTest {
         cmd.execute(state,CommandParams(3))
 
         Assert.assertEquals(7, state.instructions[1])
+    }
+
+    @Test
+    fun test_Output () {
+        val state = State()
+        state.instructions = arrayOf(4,3,2,55,4,5)
+
+        val cmd = OutputCommand()
+        cmd.execute(state,CommandParams(4))
+
+        Assert.assertEquals(55, state.output)
     }
 
     @Test
