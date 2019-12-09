@@ -5,7 +5,8 @@ import kotlin.streams.toList
 class CommandParams(raw: Int) {
     enum class ParamMode {
         Position,
-        Immediate
+        Immediate,
+        Relative
     }
     val commandCode : Int
     var param1 = ParamMode.Position
@@ -33,6 +34,7 @@ class CommandParams(raw: Int) {
     private fun paramMode(raw : Int): ParamMode {
         return when (raw) {
             1 -> ParamMode.Immediate
+            2 -> ParamMode.Relative
             else -> ParamMode.Position
         }
     }

@@ -29,4 +29,30 @@ class AddCommandTest {
         Assert.assertEquals(8, state.instructions[4])
         Assert.assertEquals(4, state.instPtr)
     }
+
+    @Test
+    fun test_Add_Relative () {
+        val state = State()
+        state.relBase = 1
+        state.instructions = arrayOf(2,3,4,4,3,6,7,8)
+
+        val cmd = AddCommand()
+        cmd.execute(state, CommandParams(2111))
+
+        Assert.assertEquals(4, state.instPtr)
+        Assert.assertEquals(9, state.instructions[4])
+    }
+
+    @Test
+    fun test_Add_Relative_Negative () {
+        val state = State()
+        state.relBase = 5
+        state.instructions = arrayOf(2,3,-2,4,3,6,7,8)
+
+        val cmd = AddCommand()
+        cmd.execute(state, CommandParams(2111))
+
+        Assert.assertEquals(4, state.instPtr)
+        Assert.assertEquals(7, state.instructions[4])
+    }
 }

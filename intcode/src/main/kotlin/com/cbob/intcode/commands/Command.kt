@@ -13,6 +13,10 @@ interface Command {
                 state.instructions[currInstr]
             }
             CommandParams.ParamMode.Immediate -> currInstr
+            CommandParams.ParamMode.Relative -> {
+                val newAddr = state.relBase + currInstr
+                state.instructions[newAddr]
+            }
         }
     }
 }
