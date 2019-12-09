@@ -5,7 +5,7 @@ class State {
     var instPtr = 0
     var inputs = mutableListOf<Int>()
     var outputs = mutableListOf<Long>()
-    val output : Long; get () { return outputs.first() }
+    val output : Long; get () { return outputs.last() }
     val currInstr : Long; get() = instructions[instPtr]
     var relBase = 0
 

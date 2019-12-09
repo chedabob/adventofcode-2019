@@ -120,7 +120,6 @@ fun day7Part2 () {
                 highestSignal = max(output, highestSignal)
             }
         } catch (ex: Exception) {
-            println(ex)
         }
     }
 
@@ -133,7 +132,7 @@ fun day9part1 () {
     runner.state.inputs = mutableListOf(1)
     val finalState = runner.run()
 
-    println("Day9 Part1 : ${finalState.output}")
+    println("Day9 Part1 : ${finalState.outputs}")
 }
 
 fun intToComponents (int: Int) : MutableList<Int> {
