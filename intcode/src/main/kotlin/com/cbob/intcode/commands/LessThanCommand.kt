@@ -7,7 +7,7 @@ class LessThanCommand : Command {
     override fun execute(state: State, params: CommandParams): Boolean {
         val p1 = getVal(state, state.instPtr + 1, params.param1)
         val p2 = getVal(state, state.instPtr + 2, params.param2)
-        val dst = state.instructions[state.instPtr + 3]
+        val dst = getDstVal(state, state.instPtr + 3, params.param3)
 
         state.instructions[dst.toInt()] = when (p1 < p2) {
             true -> 1

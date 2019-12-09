@@ -7,7 +7,7 @@ class Machine(program: String) {
     val state = State()
 
     init {
-        state.instructions = program.split(",").map { it.toLong() }.toTypedArray() + Array(1000) { 0L }
+        state.instructions = program.split(",").map { it.toLong() }.toTypedArray() + Array(10000) { 0L }
     }
 
     fun run (noun: Int? = null, verb: Int? = null) : State {
