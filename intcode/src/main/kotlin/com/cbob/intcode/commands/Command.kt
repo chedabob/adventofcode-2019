@@ -19,4 +19,13 @@ interface Command {
             }
         }
     }
+
+    fun getDstVal(state: State, idx: Int, paramMode : CommandParams.ParamMode) : Long {
+        val currInstr = state.instructions[idx]
+        return when (paramMode) {
+            CommandParams.ParamMode.Position -> currInstr
+            CommandParams.ParamMode.Immediate -> currInstr
+            CommandParams.ParamMode.Relative -> state.relBase + currInstr
+        }
+    }
 }
