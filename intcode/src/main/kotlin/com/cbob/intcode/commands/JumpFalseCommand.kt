@@ -8,8 +8,8 @@ class JumpFalseCommand : Command {
         val p1 = getVal(state, state.instPtr + 1, params.param1)
         val dst = getVal(state, state.instPtr + 2, params.param2)
 
-        if (p1 == 0) {
-            state.instPtr = dst
+        if (p1 == 0L) {
+            state.instPtr = dst.toInt()
         }
         else {
             state.instPtr += 3

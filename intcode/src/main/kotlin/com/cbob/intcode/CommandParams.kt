@@ -2,7 +2,7 @@ package com.cbob.intcode
 
 import kotlin.streams.toList
 
-class CommandParams(raw: Int) {
+class CommandParams(raw: Long) {
     enum class ParamMode {
         Position,
         Immediate,

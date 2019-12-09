@@ -8,7 +8,7 @@ class CommandTest {
     @Test
     fun test_day2_part1_examples () {
         val program = "1,9,10,3,2,3,11,0,99,30,40,50"
-        val expected1 = 3500
+        val expected1 = 3500L
         val runner = Machine(program)
         val finalState = runner.run()
         val output = finalState.instructions[0]
@@ -29,7 +29,7 @@ class CommandTest {
         val runner = Machine(program)
         runner.state.inputs = mutableListOf(input)
         val finalState = runner.run()
-        return finalState.output
+        return finalState.output.toInt()
     }
 
     @Test
@@ -49,7 +49,7 @@ class CommandTest {
                 val phaseSetting = components.removeAt(0)
                 runner.state.inputs = mutableListOf(phaseSetting, power)
                 val outputState = runner.run()
-                power = outputState.output
+                power = outputState.output.toInt()
             }
 
             highestSignal = power
@@ -76,7 +76,7 @@ class CommandTest {
                 val phaseSetting = components.removeAt(0)
                 runner.state.inputs = mutableListOf(phaseSetting, power)
                 val outputState = runner.run()
-                power = outputState.output
+                power = outputState.output.toInt()
             }
 
             highestSignal = power
@@ -103,7 +103,7 @@ class CommandTest {
                 val phaseSetting = components.removeAt(0)
                 runner.state.inputs = mutableListOf(phaseSetting, power)
                 val outputState = runner.run()
-                power = outputState.output
+                power = outputState.output.toInt()
             }
 
             highestSignal = power
@@ -111,6 +111,41 @@ class CommandTest {
         }
 
         Assert.assertEquals(expected, highestSignal)
+    }
+
+    @Test
+    fun test_day9_part1_examples1 () {
+        val program =
+            "109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99"
+
+        val runner = Machine(program)
+        val res = runner.run()
+
+        Assert.assertEquals(program, res.outputs.toString().replace("[","").replace("]","").replace(" ", ""))
+    }
+
+    @Test
+    fun test_day9_part1_examples2 () {
+        val program =
+            "1102,34915192,34915192,7,4,7,99,0"
+
+        val runner = Machine(program)
+        val res = runner.run()
+        Assert.assertEquals(16, res.output.toString().count())
+
+    }
+
+    @Test
+    fun test_day9_part1_examples3 () {
+        val program =
+            "104,1125899906842624,99"
+
+        val runner = Machine(program)
+        val res = runner.run()
+
+        Assert.assertEquals(1125899906842624, res.output)
+
+//        Assert.assertEquals(expected, highestSignal)
     }
 
 }

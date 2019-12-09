@@ -9,7 +9,7 @@ class StoreCommand : Command {
         val input = state.nextInput
 
         input?.let {
-            state.instructions[dst] = input
+            state.instructions[dst.toInt()] = input.toLong()
             state.instPtr += 2
         }
         return input != null

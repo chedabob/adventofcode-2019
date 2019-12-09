@@ -7,17 +7,17 @@ class Machine(program: String) {
     val state = State()
 
     init {
-        state.instructions = program.split(",").map { it.toInt() }.toTypedArray()
+        state.instructions = program.split(",").map { it.toLong() }.toTypedArray() + Array(1000) { 0L }
     }
 
     fun run (noun: Int? = null, verb: Int? = null) : State {
 
         noun?.let{
-            state.instructions[1] = it
+            state.instructions[1] = it.toLong()
         }
 
         verb?.let {
-            state.instructions[2] = it
+            state.instructions[2] = it.toLong()
         }
 
         while (true) {
@@ -30,7 +30,7 @@ class Machine(program: String) {
         return state
     }
 
-    private fun mapToCommand(raw: Int) : Pair<Command, CommandParams> {
+    private fun mapToCommand(raw: Long) : Pair<Command, CommandParams> {
         val params = CommandParams(raw)
         val cmd =  when (params.commandCode) {
             1 -> AddCommand()

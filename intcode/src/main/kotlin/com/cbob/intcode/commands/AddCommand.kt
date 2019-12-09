@@ -9,7 +9,7 @@ class AddCommand : Command {
         val p2 = getVal(state, state.instPtr + 2, params.param2)
         val dst = state.instructions[state.instPtr + 3]
 
-        state.instructions[dst] = p1 + p2
+        state.instructions[dst.toInt()] = p1 + p2
 
         state.instPtr += 4
         return true

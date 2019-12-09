@@ -9,7 +9,7 @@ class LessThanCommand : Command {
         val p2 = getVal(state, state.instPtr + 2, params.param2)
         val dst = state.instructions[state.instPtr + 3]
 
-        state.instructions[dst] = when (p1 < p2) {
+        state.instructions[dst.toInt()] = when (p1 < p2) {
             true -> 1
             else -> 0
         }

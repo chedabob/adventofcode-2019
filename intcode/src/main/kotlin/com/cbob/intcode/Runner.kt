@@ -33,7 +33,7 @@ fun day2Part2() {
                 val runner = Machine(program)
 
                 val finalState = runner.run(noun, verb)
-                val output = finalState.instructions[0]
+                val output = finalState.instructions[0].toInt()
                 if (output == toFind) {
                     println("Day2 Part2 : $noun$verb")
                     return
@@ -77,7 +77,7 @@ fun day7Part1() {
                     val phaseSetting = components.removeAt(0)
                     runner.state.inputs = mutableListOf(phaseSetting, power)
                     val outputState = runner.run()
-                    power = outputState.output
+                    power = outputState.output.toInt()
                 }
                 highestSignal = max(power, highestSignal)
             }
@@ -107,13 +107,13 @@ fun day7Part2 () {
                     val runner = machines[currIdx % machines.size]
                     runner.state.inputs.add(power)
                     val outputState = runner.run()
-                    power = outputState.output
+                    power = outputState.output.toInt()
                     if (machines.all { it.state.finished }) {
                         break
                     }
                     currIdx++
                 }
-                val output = machines[4].state.output
+                val output = machines[4].state.output.toInt()
                 highestSignal = max(output, highestSignal)
             }
         } catch (ex: Exception) {
