@@ -5,14 +5,14 @@ import java.lang.Integer.max
 import java.util.concurrent.Semaphore
 
 fun main() {
-//    day2Part1()
-//    day2Part2()
-//
-//    day5Part1()
-//    day5Part2()
-//
-//    day7Part1()
-//    day7Part2()
+    day2Part1()
+    day2Part2()
+
+    day5Part1()
+    day5Part2()
+
+    day7Part1()
+    day7Part2()
 
     day9part1()
 

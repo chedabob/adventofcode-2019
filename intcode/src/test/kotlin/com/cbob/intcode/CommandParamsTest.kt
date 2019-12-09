@@ -10,7 +10,7 @@ class CommandParamsTest {
         val input = 1L
         val params = CommandParams(input)
 
-        Assert.assertEquals(input, params.commandCode)
+        Assert.assertEquals(input.toInt(), params.commandCode)
     }
 
     @Test
@@ -18,7 +18,7 @@ class CommandParamsTest {
         val input = 99L
         val params = CommandParams(input)
 
-        Assert.assertEquals(input, params.commandCode)
+        Assert.assertEquals(input.toInt(), params.commandCode)
     }
 
     @Test
