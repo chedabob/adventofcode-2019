@@ -9,7 +9,7 @@ class StoreCommandTest {
     @Test
     fun test_Store () {
         val state = State()
-        state.inputs = arrayOf(7)
+        state.inputs = mutableListOf(7)
         state.instructions = arrayOf(3,1)
 
         val cmd = StoreCommand()

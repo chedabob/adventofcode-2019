@@ -6,6 +6,7 @@ class State {
     var inputs = mutableListOf<Int>()
     var output = 0
     val currInstr : Int; get() = instructions[instPtr]
+    var relBase = 0
 
     private var inputPtr = 0
     val nextInput : Int?; get() {

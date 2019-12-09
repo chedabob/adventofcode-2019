@@ -41,6 +41,7 @@ class Machine(program: String) {
             6 -> JumpFalseCommand()
             7 -> LessThanCommand()
             8 -> EqualCommand()
+            9 -> AdjustRelativeBaseCommand()
             99 -> TerminateCommand()
             else -> throw Exception("Unknown instruction ${params.commandCode}")
         }
