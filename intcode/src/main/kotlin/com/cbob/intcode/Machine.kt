@@ -3,8 +3,7 @@ package com.cbob.intcode
 import com.cbob.intcode.commands.*
 import java.lang.Exception
 
-class Machine(program: String) {
-    val state = State()
+class Machine(program: String, val state: State = State()) {
 
     init {
         state.instructions = program.split(",").map { it.toLong() }.toTypedArray() + Array(10000) { 0L }

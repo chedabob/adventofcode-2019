@@ -1,6 +1,6 @@
 package com.cbob.intcode
 
-class State {
+open class State {
     var instructions : Array<Long> = arrayOf()
     var instPtr = 0
     var inputs = mutableListOf<Int>()
@@ -10,7 +10,7 @@ class State {
     var relBase = 0
 
     private var inputPtr = 0
-    val nextInput : Int?; get() {
+    open val nextInput : Int?; get() {
         val input : Int? = inputs.getOrNull(inputPtr)
 
         input?.let {
@@ -23,7 +23,7 @@ class State {
         inputs.add(newInput)
     }
 
-    fun writeOutput (newOutput : Long) {
+    open fun writeOutput (newOutput : Long) {
         outputs.add(newOutput)
     }
     val finished : Boolean; get () { return instPtr >= instructions.size }
