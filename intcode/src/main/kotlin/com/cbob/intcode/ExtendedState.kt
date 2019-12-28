@@ -33,7 +33,7 @@ class ExtendedState : State() {
     }
 
 
-    private val width = 10000
+    val width = 250
     var data = MutableList(width * width) { 0 }
 
     private var currPosition = Point(width / 2, width / 2)
@@ -57,6 +57,11 @@ class ExtendedState : State() {
             currPosition = direction.apply(currPosition)
         }
         paint = !paint
+    }
+
+
+    fun setInitialPointToWhite () {
+        setArrayVal(currPosition, data, width, 1)
     }
 
     private fun setArrayVal (p: Point, data: MutableList<Int>, width: Int, newVal: Int) {
