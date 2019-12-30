@@ -1,5 +1,7 @@
 package com.cbob.intcode
 
+import kotlin.math.max
+
 class GameState : State() {
 
     enum class Action {
@@ -9,8 +11,9 @@ class GameState : State() {
     }
 
 
-    val width = 250
+    val width = 40
     var data = MutableList(width * width) { 0 }
+    var score = 0
 
     private var currPosition = Point(width / 2, width / 2)
 
@@ -18,7 +21,14 @@ class GameState : State() {
 
     override val nextInput: Int?
         get() {
-            return getArrayVal(currPosition, data, width)
+            val ballLoc = findBall(data, width) ?: return 0
+            val paddleLoc = findPaddle(data, width) ?: return 0
+
+            return when {
+                ballLoc.x < paddleLoc.x -> -1
+                ballLoc.x > paddleLoc.x -> 1
+                else -> 0
+            }
         }
 
     override fun writeOutput(newOutput: Long) {
@@ -32,7 +42,13 @@ class GameState : State() {
                 currAction = Action.Paint
             }
             Action.Paint -> {
-                setArrayVal(currPosition, data, width, newOutput.toInt())
+                if (currPosition.x == -1 && currPosition.y == 0) {
+                    println(newOutput.toInt())
+                    score = max(score, newOutput.toInt())
+                }
+                else {
+                    setArrayVal(currPosition, data, width, newOutput.toInt())
+                }
                 currAction = Action.SetX
             }
         }
@@ -53,4 +69,29 @@ class GameState : State() {
     }
 
     data class Point (var x : Int, var y: Int)
+
+    private fun findBall (data : List<Int>, width: Int) : Point? {
+        val idx = data.indexOfFirst { it == 4 }
+        if (idx == -1) {
+            return null
+        }
+
+        return convert(idx, width)
+    }
+
+    private fun findPaddle (data : List<Int>, width: Int) : Point? {
+        val idx = data.indexOfLast { it == 3 }
+        if (idx == -1) {
+            return null
+        }
+
+        return convert(idx, width)
+    }
+
+    private fun convert(idx: Int, width: Int): Point {
+        val y = idx / width
+        val x = idx % width
+        return Point(x, y)
+    }
+
 }
